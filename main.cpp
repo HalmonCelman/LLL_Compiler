@@ -42,7 +42,7 @@ std::ofstream out_file;
 std::ifstream in_file;
 std::string line;
 
-bool status=false;
+bool status;
 
 void findAllAndChange(void);
 lll_command_list compareCommands(void);
@@ -67,21 +67,19 @@ int main(int args, char **argv){
     return 0;
 }
 
-void replace_spaces_by_nulls(std::string * line){
-    for(int i=0;i<line->length();i++){
-        if((*line)[i]==' '){
-            (*line)[i]=(char)0;
-        }
-    }
-}
 
 std::string getStringFromString(std::string str1,unsigned int whichOne){
+    status=false;
     std::string str2;
     for(int i=0;i<str1.length();i++){
         switch(str1[i]){
             case 0:
-            case ' ':
+            case '\t':
+            case '\r':
             case '\n':
+            case ' ':
+            case ',':
+            case ';':
                 if(status){
                     if(!whichOne){
                         return str2;
@@ -100,7 +98,7 @@ std::string getStringFromString(std::string str1,unsigned int whichOne){
     }
 
     if(!whichOne){
-        return str2;
+        return (str2.length() ? str2 : " ");
     }
 
     return " ";
@@ -150,7 +148,9 @@ void findAllAndChange(void){
     do{
         str=getStringFromString(line,i);
         if(str != " "){
-        if(str[0] == '&' || str[0] == '*' || str[0] == ':'){ //register or label
+        if(str[0] == '#'){ //comment
+            return;
+        } else if(str[0] == '&' || str[0] == '*' || str[0] == ':'){ //register or label
             out_file<<(char)str[0];
             unsigned int strVal=std::stoi(&str[1]);
             out_file<<(char)(strVal>>24);
