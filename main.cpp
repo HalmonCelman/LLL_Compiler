@@ -143,6 +143,9 @@ lll_command_list compareCommands(std::string strcommand){
 }
 
 void findAllAndChange(void){
+    bool is64b=false;
+    bool is32b=false;
+    int command=0;
     std::string str;
     unsigned int i=0;
     do{
@@ -150,17 +153,37 @@ void findAllAndChange(void){
         if(str != " "){
         if(str[0] == '#'){ //comment
             return;
-        } else if(str[0] == '&' || str[0] == '*' || str[0] == ':'){ //register or label
-            out_file<<(char)str[0];
-            unsigned int strVal=std::stoi(&str[1]);
+        }else if(is64b){
+            unsigned long long int strVal=std::stoi(&str[0]);
+            out_file<<(char)(strVal>>56);
+            out_file<<(char)(strVal>>48);
+            out_file<<(char)(strVal>>40);
+            out_file<<(char)(strVal>>32);
             out_file<<(char)(strVal>>24);
             out_file<<(char)(strVal>>16);
             out_file<<(char)(strVal>>8);
             out_file<<(char)(strVal);
+            is64b=false;
+        }else if(str[0] == '&' || str[0] == '*' || str[0] == ':' || is32b){ //register or label
+            if(!is32b){
+            out_file<<(char)str[0];
+            }
+            unsigned int strVal=std::stoi(&str[is32b?0:1]);
+            out_file<<(char)(strVal>>24);
+            out_file<<(char)(strVal>>16);
+            out_file<<(char)(strVal>>8);
+            out_file<<(char)(strVal);
+            is32b=false;
         }else if((str[0] >= '0') && (str[0] <= '9')) { //INT
             out_file<<(char)std::stoi(str);
         }else{ //command
-            out_file<<(char)compareCommands(str);
+            command=compareCommands(str);
+            if(command == LLL_JMP){
+                is64b=true;
+            }else if(command == LLL_LJMP){
+                is32b=true;
+            }
+            out_file<<(char)command;
         }
         i++;
         }
