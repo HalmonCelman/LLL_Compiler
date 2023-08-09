@@ -106,6 +106,7 @@ std::string getStringFromString(std::string str1,unsigned int whichOne){
 
 
 lll_command_list compareCommands(std::string strcommand){
+
     if("add" == strcommand){ return LLL_ADD; }
     if("addi" == strcommand){ return LLL_ADDI; }
     if("sub" == strcommand){ return LLL_SUB; }
@@ -174,8 +175,13 @@ void findAllAndChange(void){
             out_file<<(char)(strVal>>8);
             out_file<<(char)(strVal);
             is32b=false;
-        }else if((str[0] >= '0') && (str[0] <= '9')) { //INT
+        }else if(str[0]=='%'){
+            out_file<<(char)str[0];
+            out_file<<(char)str[1];
+        }else if((str[0] >= '0') && (str[0] <= '9')) {  //INT
             out_file<<(char)std::stoi(str);
+        }else if(str.length()==1){                      // char
+            out_file<<(char)str[0];
         }else{ //command
             command=compareCommands(str);
             if(command == LLL_JMP){
