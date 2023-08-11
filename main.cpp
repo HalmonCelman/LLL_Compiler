@@ -62,6 +62,7 @@ int main(int args, char **argv){
             while(std::getline(in_file,line)){
                 findAllAndChange();
             }
+            in_file.close();
         }
     }
     return 0;
