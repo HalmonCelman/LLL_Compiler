@@ -14,6 +14,7 @@ unsigned char error=0;
 std::string tokens[3];
 unsigned char actual_token = 0;
 unsigned char actual_number_of_tokens = 1;
+lll_command actual_command;
 
 std::string delimiterList=" ,;";
 const unsigned char delimiterListLength=delimiterList.length();
@@ -26,14 +27,15 @@ static bool isDelimiter(char actual_character){
     return false;
 }
 
-static void process(char actual_character){
+static void process(char actual_character, unsigned long long int line_number){
     switch(status){
         case TOKEN:
             if(isDelimiter(actual_character)){
                 actual_token++;
 
                 if(actual_token == 1){
-                    actual_number_of_tokens = getNumberOfTokens(compareCommands(tokens[0]));
+                    actual_command = compareCommands(tokens[0],line_number);
+                    actual_number_of_tokens = getNumberOfTokens(actual_command);
                 }
 
                 if(actual_token == actual_number_of_tokens){
@@ -54,9 +56,9 @@ static void process(char actual_character){
     }
 }
 
-static void processCommand(void){
+static void processCommand(unsigned long long int line_number){
     if(readyToExecute){
-        std::cout<<tokens[0]<<":"<<tokens[1]<<":"<<tokens[2]<<std::endl;
+        executeCommand(actual_command,tokens[0],tokens[1],tokens[2],line_number);
         tokens[0].clear();
         tokens[1].clear();
         tokens[2].clear();
@@ -71,20 +73,20 @@ void processTokensInLine(std::string line, unsigned long long int line_number){
         #if DEBUG_MODE
             std::cout<<"processing: '"<<line[i]<<"' \n";
         #endif
-        process(line[i]);
+        process(line[i], line_number);
         
-        processCommand();
+        processCommand(line_number);
     }
 }
 
-void endOfLine(void){
-    process(' ');
-    processCommand();
+void endOfLine(unsigned long long int line_number){
+    process(' ', line_number);
+    processCommand(line_number);
 }
 
-void endOfProcessing(void){
-    process(' ');
-    processCommand();
+void endOfProcessing(unsigned long long int line_number){
+    process(' ', line_number);
+    processCommand(line_number);
     if(actual_token || tokens[0].length()){
         std::cout<<"ERROR: Unexpected End Of File: "<<tokens[0]<<" "<<tokens[1]<<" "<<tokens[2]<<std::endl;
     }

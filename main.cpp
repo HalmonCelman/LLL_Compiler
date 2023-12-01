@@ -26,7 +26,7 @@ int main(int args, char **argv){
         std::ofstream out_file;
         std::ifstream in_file;
         std::string line;
-        unsigned long long int line_number = 0;
+        unsigned long long int line_number;
 
 
         out_file.open(argv[1],std::ios::out | std::ios::trunc);
@@ -37,6 +37,8 @@ int main(int args, char **argv){
 
         // compile loop
         for(int i=2; i<args; i++){
+            line_number = 1;
+            
             const char * compiled_file=makeTmpFilename(TMP_DIR,argv[i]);
             convertFileToLowLetters(compiled_file, argv[i]); // non sensitive 
 
@@ -50,9 +52,10 @@ int main(int args, char **argv){
 
             while(std::getline(in_file,line)){
                 processTokensInLine(line, line_number);
-                endOfLine();
+                endOfLine(line_number);
+                line_number++;
             }
-            endOfProcessing();
+            endOfProcessing(line_number);
 
             in_file.close();
         }

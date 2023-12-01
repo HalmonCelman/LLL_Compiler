@@ -1,48 +1,56 @@
 #include "commands.hpp"
 
-const unsigned char number_of_tokens[]={
-    3,      // ADD
-    3,      // AND
-    3,      // CMP
-    2,      // DEC
-    3,      // DIV
-    3,      // FRJMP
-    3,      // IN
-    2,      // INC
-    3,      // JMP
-    3,      // MOV
-    3,      // MUL
-    2,      // NOT
-    3,      // OR
-    3,      // OUT
-    1,      // RET
-    3,      // RJMP
-    3      // SUB
-};
-
-
-
-lll_command compareCommands(std::string strcommand){
-
-    if("add" == strcommand){    return LLL_ADD;     }
-    if("and" == strcommand){    return LLL_AND;     }
-    if("cmp" == strcommand){    return LLL_CMP;     }
-    if("dec" == strcommand){    return LLL_DEC;     }
-    if("div" == strcommand){    return LLL_DIV;     }
-    if("frjmp" == strcommand){  return LLL_FRJMP;   }
-    if("in" == strcommand){     return LLL_IN;      }
-    if("inc" == strcommand){    return LLL_INC;     }
-    if("jmp" == strcommand){    return LLL_JMP;     }
-    if("mov" == strcommand){    return LLL_MOV;     }
-    if("mul" == strcommand){    return LLL_MUL;     }
-    if("not" == strcommand){    return LLL_NOT;     }
-    if("or" == strcommand){     return LLL_OR;      }
-    if("out" == strcommand){    return LLL_OUT;     }
-    if("ret" == strcommand){    return LLL_RET;     }
-    if("rjmp" == strcommand){   return LLL_RJMP;    }
-    if("sub" == strcommand){    return LLL_SUB;     }
-    if("exit" == strcommand){   return LLL_EXIT;    }
-
-    std::cout<<"ERROR: wrong command: "<<strcommand<<std::endl;
-    exit(0);
+void lllc_add   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"add command"<<std::endl;
+}
+void lllc_and   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"and command"<<std::endl;
+}
+void lllc_cmp   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"cmp command"<<std::endl;
+}
+void lllc_dec   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"dec command"<<std::endl;
+}
+void lllc_div   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"div command"<<std::endl;
+}
+void lllc_frjmp (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"frjmp command"<<std::endl;
+}
+void lllc_in    (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"in command"<<std::endl;
+}
+void lllc_inc   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"inc command"<<std::endl;
+}
+void lllc_jmp   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"jmp command"<<std::endl;
+}
+void lllc_mov   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"mov command"<<std::endl;
+}
+void lllc_mul   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"mul command"<<std::endl;
+}
+void lllc_not   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"not command"<<std::endl;
+}
+void lllc_or    (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"or command"<<std::endl;
+}
+void lllc_out   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"out command"<<std::endl;
+}
+void lllc_ret   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"ret command"<<std::endl;
+}
+void lllc_rjmp  (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"rjmp command"<<std::endl;
+}
+void lllc_sub   (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"sub command"<<std::endl;
+}
+void lllc_exit  (std::string param1,std::string param2,unsigned long long int line_number){
+    std::cout<<"exit command"<<std::endl;
 }
