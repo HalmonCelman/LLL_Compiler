@@ -1,8 +1,22 @@
-cmake_minimum_required(VERSION 3.27.0)
+cmake_minimum_required(VERSION 3.25.0)
 
 project(lllc VERSION 1.0)
 
-add_executable(${PROJECT_NAME} main.cpp)
+set(lllc_INCLUDE_DIRECTORIES
+Prepare/
+Execute/
+.
+)
+
+add_subdirectory(Prepare)
+add_subdirectory(Execute)
+
+add_executable(${PROJECT_NAME} ${lllc_SOURCE_FILES} main.cpp )
+
+target_link_libraries(${PROJECT_NAME} Prepare)
+target_link_libraries(${PROJECT_NAME} Execute)
+target_include_directories(${PROJECT_NAME} PRIVATE ${lllc_INCLUDE_DIRECTORIES})
+
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
