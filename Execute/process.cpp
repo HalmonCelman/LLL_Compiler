@@ -1,18 +1,19 @@
 #include "process.hpp"
 #include "execute.hpp"
-
+#include "directives.hpp"
 
 typedef enum{
     TOKEN,
-    DELIMITER
+    DELIMITER,
+    DIRECTIVE
 } STATUS;
 
 STATUS status=DELIMITER;
-bool readyToExecute=false;
 unsigned char error=0;
 
-std::string tokens[3];
+std::string tokens[4];
 unsigned char actual_token = 0;
+int actual_directive = 0;
 unsigned char actual_number_of_tokens = 1;
 lll_command actual_command;
 
@@ -27,10 +28,24 @@ static bool isDelimiter(char actual_character){
     return false;
 }
 
-static void process(char actual_character, unsigned long long int line_number){
+static std::string processCommand(unsigned long long int line_number){
+    std::string returnString = executeCommand(actual_command,tokens[0],tokens[1],tokens[2],tokens[3],line_number);
+    //cleanup
+    tokens[0].clear();
+    tokens[1].clear();
+    tokens[2].clear();
+    tokens[3].clear();
+    actual_token = 0;
+    actual_number_of_tokens = 1;
+
+    return returnString;
+}
+
+static std::string process(char actual_character, unsigned long long int line_number,bool end_of_line){
     switch(status){
         case TOKEN:
             if(isDelimiter(actual_character)){
+                status=DELIMITER;
                 actual_token++;
 
                 if(actual_token == 1){
@@ -39,55 +54,69 @@ static void process(char actual_character, unsigned long long int line_number){
                 }
 
                 if(actual_token == actual_number_of_tokens){
-                    readyToExecute=true;
+                    return processCommand(line_number);
                 }
-                status=DELIMITER;
+                
             }else{
-                tokens[actual_token].push_back(actual_character);
+                actual_directive=isDirective(actual_character);
+                if(actual_directive){
+                    process(' ',line_number, false);
+                    status = DIRECTIVE;                    
+                }else{
+                    tokens[actual_token].push_back(actual_character);
+                }
             }
+            return "";
 
-        break;
         case DELIMITER:
             if(!isDelimiter(actual_character)){
-                tokens[actual_token].push_back(actual_character);
-                status = TOKEN;
+                actual_directive=isDirective(actual_character);
+                if(actual_directive){
+                    status = DIRECTIVE;
+                }else{
+                    tokens[actual_token].push_back(actual_character);
+                    status = TOKEN;
+                }
             }
-        break;
+            return "";
+
+        case DIRECTIVE:
+
+            if(endOfDirective(actual_directive,actual_character,end_of_line)){
+                status=DELIMITER;
+            }else{
+                return processDirective(actual_character,end_of_line);
+            }
+            return "";
+        default: 
+            std::cout<<"COMPILER ERROR: process should never enter this state";
+            exit(0);
     }
 }
 
-static void processCommand(unsigned long long int line_number){
-    if(readyToExecute){
-        executeCommand(actual_command,tokens[0],tokens[1],tokens[2],line_number);
-        tokens[0].clear();
-        tokens[1].clear();
-        tokens[2].clear();
-        readyToExecute = false;
-        actual_token = 0;
-        actual_number_of_tokens = 1;
-    }
+static std::string endOfLine(unsigned long long int line_number){
+    return process(' ', line_number, true);
 }
 
-void processTokensInLine(std::string line, unsigned long long int line_number){
+std::string processTokensInLine(std::string line, unsigned long long int line_number){
+    std::string tmpString;
     for(int i=0;line[i];i++){
         #if DEBUG_MODE
             std::cout<<"processing: '"<<line[i]<<"' \n";
         #endif
-        process(line[i], line_number);
-        
-        processCommand(line_number);
+        tmpString += process(line[i], line_number, false);
     }
+    tmpString += endOfLine(line_number);
+
+    return tmpString;
 }
 
-void endOfLine(unsigned long long int line_number){
-    process(' ', line_number);
-    processCommand(line_number);
-}
 
-void endOfProcessing(unsigned long long int line_number){
-    process(' ', line_number);
-    processCommand(line_number);
+
+std::string endOfProcessing(unsigned long long int line_number){
+    std::string tmpString = process(' ', line_number, true);
     if(actual_token || tokens[0].length()){
-        std::cout<<"ERROR: Unexpected End Of File: "<<tokens[0]<<" "<<tokens[1]<<" "<<tokens[2]<<std::endl;
+        std::cout<<"ERROR: Unexpected End Of File: "<<tokens[0]<<" "<<tokens[1]<<" "<<tokens[2]<<tokens[3]<<std::endl;
     }
+    return tmpString;
 }

@@ -1,23 +1,23 @@
 #include "command_processing.hpp" 
 
 const unsigned char number_of_tokens[]={
-    3,      // ADD
-    3,      // AND
+    4,      // ADD
+    4,      // AND
     3,      // CMP
     2,      // DEC
-    3,      // DIV
+    4,      // DIV
     3,      // FRJMP
     3,      // IN
     2,      // INC
     3,      // JMP
     3,      // MOV
-    3,      // MUL
+    4,      // MUL
     2,      // NOT
     3,      // OR
     3,      // OUT
     1,      // RET
     3,      // RJMP
-    3      // SUB
+    4      // SUB
 };
 
 

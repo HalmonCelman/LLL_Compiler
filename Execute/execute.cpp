@@ -1,7 +1,7 @@
 #include "execute.hpp"
 #include "commands.hpp"
 
-typedef void (*lllc_exec)(std::string,std::string,unsigned long long int);
+typedef std::string (*lllc_exec)(std::string,std::string,std::string,unsigned long long int);
 
 const lllc_exec lllc_command_map[]={
     lllc_add,
@@ -39,8 +39,8 @@ unsigned char getNumberOfTokens(lll_command command){
     }
 }
 
-void executeCommand(lll_command command,std::string strcommand,std::string param1, std::string param2, unsigned long long int line_number){
-    std::cout<<line_number<<": "<<strcommand<<":"<<param1<<":"<<param2<<std::endl;
+std::string executeCommand(lll_command command,std::string strcommand,std::string param1, std::string param2, std::string param3, unsigned long long int line_number){
+    std::cout<<line_number<<": "<<strcommand<<":"<<param1<<":"<<param2<<":"<<param3<<std::endl;
 
-    lllc_command_map[command](param1,param2,line_number);
+    return lllc_command_map[command](param1,param2,param3,line_number);
 }

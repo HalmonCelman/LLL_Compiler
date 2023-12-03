@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <sys/stat.h>
 #include <filesystem>
@@ -14,7 +15,7 @@ int main(int args, char **argv){
 
         // creating temporary files
         std::string TMP_DIR="lllc_tmp";
-        if(mkdir(TMP_DIR.c_str())){
+        if(mkdir(TMP_DIR.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)){
             if(errno == EEXIST){
                 std::cout<<"NOTE: temporary folder already exist - overwriting"<<std::endl;
             } else{
@@ -30,6 +31,7 @@ int main(int args, char **argv){
 
 
         out_file.open(argv[1],std::ios::out | std::ios::trunc);
+
         if(!out_file.is_open()){
             std::cout<<"Failed to open output file: "<<argv[1]<<std::endl;
             exit(0);
@@ -37,10 +39,12 @@ int main(int args, char **argv){
 
         // compile loop
         for(int i=2; i<args; i++){
+
             line_number = 1;
-            
-            const char * compiled_file=makeTmpFilename(TMP_DIR,argv[i]);
-            convertFileToLowLetters(compiled_file, argv[i]); // non sensitive 
+            std::cout<<std::endl;
+
+            std::string compiled_file = TMP_DIR + "/" + (std::string)(argv[i]);
+            convertFileToLowLetters(compiled_file.c_str(), argv[i]); // non sensitive 
 
             in_file.open(compiled_file, std::ios::in);
             if(!in_file.is_open()){
@@ -49,13 +53,12 @@ int main(int args, char **argv){
             } else{
                 std::cout<<"Compiling "<<compiled_file<<std::endl;
             }
-
             while(std::getline(in_file,line)){
-                processTokensInLine(line, line_number);
-                endOfLine(line_number);
+                out_file << processTokensInLine(line, line_number);
+                
                 line_number++;
             }
-            endOfProcessing(line_number);
+            out_file << endOfProcessing(line_number);
 
             in_file.close();
         }

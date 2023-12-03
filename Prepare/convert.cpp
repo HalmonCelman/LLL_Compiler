@@ -3,21 +3,15 @@
 #include <iostream>
 #include <fstream>
 
-static void joinString(char * where,char * what){
-    while( *where++ = *what++);
-    *where=0;
-}
-
-
-void convertFileToLowLetters(const char * out_file,const char * in_file){
+void convertFileToLowLetters(const char * out_f,const char * in_file){
     std::ofstream out;
     std::ifstream in;
 
     std::string line;
 
-    out.open(out_file,std::ios::out | std::ios::trunc);
+    out.open(out_f,std::ios::out | std::ios::trunc);
     if(!out.is_open()){
-        std::cout<<"ERROR: Failed to create tmp output file: "<<out_file<<std::endl;
+        std::cout<<"ERROR: Failed to create tmp output file: "<<out_f<<std::endl;
         exit(0);
     }
 
@@ -42,11 +36,4 @@ void convertFileToLowLetters(const char * out_file,const char * in_file){
     out.close();
 
 }
-
-const char * makeTmpFilename(std::string dir,const char * file){
-    dir.push_back('/');
-    joinString(&dir[dir.length()],(char *)file);
-    return dir.c_str();
-}
-
 
