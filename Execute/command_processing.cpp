@@ -1,5 +1,9 @@
 #include "command_processing.hpp" 
 
+
+/*
+array with number of parameters( including command itself )
+*/
 const unsigned char number_of_tokens[]={
     4,      // ADD
     4,      // AND
@@ -17,11 +21,15 @@ const unsigned char number_of_tokens[]={
     3,      // OUT
     1,      // RET
     3,      // RJMP
-    4      // SUB
+    4       // SUB
 };
 
 
-
+/*
+compare commands
+checks if token matches any command in string representation and converts it into ENUM representation
+returns error if there is no such command
+*/
 lll_command compareCommands(std::string strcommand,unsigned long long int line_number){
 
     if("add" == strcommand){    return LLL_ADD;     }

@@ -1,0 +1,24 @@
+- directives map, directives execution
+- united in one place commands to easly create/delete commands
+- implementation of commands with errors possible( and bits for s option and conditionals) and with optimalization:
+  - add
+  - and
+  - cmp
+  - dec
+  - div
+  - frjmp
+  - in
+  - inc
+  - jmp
+  - mov
+  - mul
+  - not
+  - or
+  - out
+  - ret
+  - rjmp
+  - sub
+  - exit
+- directive implementation: .def
+- jumps calculation - with optimalization
+- jumping over comments (with !)

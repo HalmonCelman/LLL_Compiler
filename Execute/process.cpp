@@ -2,24 +2,28 @@
 #include "execute.hpp"
 #include "directives.hpp"
 
+// possible states of state machine in Process function
 typedef enum{
     TOKEN,
     DELIMITER,
     DIRECTIVE
 } STATUS;
 
-STATUS status=DELIMITER;
-unsigned char error=0;
+STATUS status=DELIMITER;                                        // status of state machine in Process function
 
-std::string tokens[4];
-unsigned char actual_token = 0;
-int actual_directive = 0;
-unsigned char actual_number_of_tokens = 1;
-lll_command actual_command;
+std::string tokens[4];                                          // list of tokens - command/directive and parameters
+unsigned char actual_token = 0;                                 // actually managed token
+int actual_directive = 0;                                       // actually detected directive
+bool first_directive_execution = true;                          // only for exlamation mark in comments
+unsigned char actual_number_of_tokens = 1;                      // number of tokens - always at least 1
+lll_command actual_command;                                     // it's actually detected and in future executed command
 
-std::string delimiterList=" ,;";
-const unsigned char delimiterListLength=delimiterList.length();
+std::string delimiterList=" ,;";                                // list of possible delimiters ( without newline )
+const unsigned char delimiterListLength=delimiterList.length(); // constant to don't check always length
 
+/*
+this function checks if actual character is delimiter
+*/
 static bool isDelimiter(char actual_character){
     for(int i=0;i<delimiterListLength;i++){
         if(actual_character == delimiterList[i])
@@ -28,6 +32,9 @@ static bool isDelimiter(char actual_character){
     return false;
 }
 
+/*
+this function execute command and do cleanup after succesfully finished execution
+*/
 static std::string processCommand(unsigned long long int line_number){
     std::string returnString = executeCommand(actual_command,tokens[0],tokens[1],tokens[2],tokens[3],line_number);
     //cleanup
@@ -41,7 +48,16 @@ static std::string processCommand(unsigned long long int line_number){
     return returnString;
 }
 
+/*
+this function process one character at once, based on state machine architecture
+
+- identify tokens/directives
+- executes tokens/directives
+*/
 static std::string process(char actual_character, unsigned long long int line_number,bool end_of_line){
+    
+    std::string tmpString;
+    
     switch(status){
         case TOKEN:
             if(isDelimiter(actual_character)){
@@ -81,23 +97,24 @@ static std::string process(char actual_character, unsigned long long int line_nu
             return "";
 
         case DIRECTIVE:
-
             if(endOfDirective(actual_directive,actual_character,end_of_line)){
                 status=DELIMITER;
+                first_directive_execution = true;
             }else{
-                return processDirective(actual_character,end_of_line);
+                tmpString = processDirective(actual_character,end_of_line, first_directive_execution);
+                first_directive_execution = false;
             }
-            return "";
+
+            return tmpString;
         default: 
             std::cout<<"COMPILER ERROR: process should never enter this state";
             exit(0);
     }
 }
 
-static std::string endOfLine(unsigned long long int line_number){
-    return process(' ', line_number, true);
-}
-
+/*
+this function process all tokens at single line
+*/
 std::string processTokensInLine(std::string line, unsigned long long int line_number){
     std::string tmpString;
     for(int i=0;line[i];i++){
@@ -106,13 +123,15 @@ std::string processTokensInLine(std::string line, unsigned long long int line_nu
         #endif
         tmpString += process(line[i], line_number, false);
     }
-    tmpString += endOfLine(line_number);
+    tmpString += process(' ', line_number, true);
 
     return tmpString;
 }
 
 
-
+/*
+this function cleanup at the end - checks if any tokens left and process
+*/
 std::string endOfProcessing(unsigned long long int line_number){
     std::string tmpString = process(' ', line_number, true);
     if(actual_token || tokens[0].length()){
