@@ -1,6 +1,6 @@
 #include "process.hpp"
-#include "execute.hpp"
 #include "directives.hpp"
+#include "command_processing.hpp"
 
 // possible states of state machine in Process function
 typedef enum{
@@ -16,7 +16,7 @@ unsigned char actual_token = 0;                                 // actually mana
 int actual_directive = 0;                                       // actually detected directive
 bool first_directive_execution = true;                          // only for exlamation mark in comments
 unsigned char actual_number_of_tokens = 1;                      // number of tokens - always at least 1
-lll_command actual_command;                                     // it's actually detected and in future executed command
+unsigned int actual_command;                                     // it's actually detected and in future executed command
 
 std::string delimiterList=" ,;";                                // list of possible delimiters ( without newline )
 const unsigned char delimiterListLength=delimiterList.length(); // constant to don't check always length

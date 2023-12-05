@@ -21,3 +21,6 @@ std::string lllc_ret   (std::string param1,std::string param2,std::string param3
 std::string lllc_rjmp  (std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_sub   (std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_exit  (std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
+// directives
+std::string lllc_def   (std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
+std::string lllc_label (std::string param1,std::string param2,std::string param3,unsigned long long int line_number);

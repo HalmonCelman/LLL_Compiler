@@ -72,3 +72,11 @@ std::string lllc_exit  (std::string param1,std::string param2,std::string param3
     std::cout<<"exit command"<<std::endl;
     return "";
 }
+std::string lllc_def   (std::string param1,std::string param2,std::string param3,unsigned long long int line_number){
+    std::cout<<"def directive"<<std::endl;
+    return "";
+}
+std::string lllc_label (std::string param1,std::string param2,std::string param3,unsigned long long int line_number){
+    std::cout<<"label directive"<<std::endl;
+    return "";
+}
