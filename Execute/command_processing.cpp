@@ -2,35 +2,10 @@
 #include "commands.hpp"
 
 
-typedef std::string (*lllc_exec)(std::string,std::string,std::string,unsigned long long int);
+typedef std::string (*lllc_exec)(std::string,std::string,std::string,std::string,unsigned long long int);
 
 
 /// **************************** section of commands & directives ***********************************
-
-typedef enum{
-    LLL_ADD = 0,
-    LLL_AND,
-    LLL_CMP,
-    LLL_DEC,
-    LLL_DIV,
-    LLL_FRJMP,
-    LLL_IN,
-    LLL_INC,
-    LLL_JMP,
-    LLL_MOV,
-    LLL_MUL,
-    LLL_NOT,
-    LLL_OR,
-    LLL_OUT,
-    LLL_RET,
-    LLL_RJMP,
-    LLL_SUB,
-    LLL_EXIT=63,
-    
-// Directives
-    LLLC_DEF,
-    LLLC_LABEL
-} lll_command;
 
 /*
 array with number of parameters( including command itself )
@@ -47,7 +22,7 @@ const unsigned char number_of_tokens[]={
     3,      // JMP
     3,      // MOV
     4,      // MUL
-    2,      // NOT
+    3,      // NOT
     3,      // OR
     3,      // OUT
     1,      // RET
@@ -93,7 +68,8 @@ compare commands
 checks if token matches any command in string representation and converts it into ENUM representation
 returns error if there is no such command
 */
-unsigned int compareCommands(std::string strcommand,unsigned long long int line_number){
+unsigned int compareCommands(std::string strfullcommand,unsigned long long int line_number){
+    std::string strcommand= strfullcommand.substr(0,3);
 
     if("add" == strcommand){    return LLL_ADD;     }
     if("and" == strcommand){    return LLL_AND;     }
@@ -146,5 +122,5 @@ returns string to write to output file
 std::string executeCommand(unsigned int command,std::string strcommand,std::string param1, std::string param2, std::string param3, unsigned long long int line_number){
     std::cout<<line_number<<": "<<strcommand<<":"<<param1<<":"<<param2<<":"<<param3<<std::endl;
 
-    return lllc_command_map[command](param1,param2,param3,line_number);
+    return lllc_command_map[command](strcommand.substr(3),param1,param2,param3,line_number);
 }
