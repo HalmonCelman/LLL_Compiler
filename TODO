@@ -1,7 +1,4 @@
-- implementation of commands with errors possible( and bits for s option and conditionals) and with optimalization:
-  - frjmp
-  - jmp
-  - rjmp
 - directive implementation: .def
-- jumps calculation - with optimalization
+- jump calculated to write
+- optimalization
 - jumping over comments (with !)

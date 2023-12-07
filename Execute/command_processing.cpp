@@ -68,29 +68,28 @@ compare commands
 checks if token matches any command in string representation and converts it into ENUM representation
 returns error if there is no such command
 */
-unsigned int compareCommands(std::string strfullcommand,unsigned long long int line_number){
-    std::string strcommand= strfullcommand.substr(0,3);
+unsigned int compareCommands(std::string strcommand,unsigned long long int line_number){
 
-    if("add" == strcommand){    return LLL_ADD;     }
-    if("and" == strcommand){    return LLL_AND;     }
-    if("cmp" == strcommand){    return LLL_CMP;     }
-    if("dec" == strcommand){    return LLL_DEC;     }
-    if("div" == strcommand){    return LLL_DIV;     }
-    if("frjmp" == strcommand){  return LLL_FRJMP;   }
-    if("in" == strcommand){     return LLL_IN;      }
-    if("inc" == strcommand){    return LLL_INC;     }
-    if("jmp" == strcommand){    return LLL_JMP;     }
-    if("mov" == strcommand){    return LLL_MOV;     }
-    if("mul" == strcommand){    return LLL_MUL;     }
-    if("not" == strcommand){    return LLL_NOT;     }
-    if("or" == strcommand){     return LLL_OR;      }
-    if("out" == strcommand){    return LLL_OUT;     }
-    if("ret" == strcommand){    return LLL_RET;     }
-    if("rjmp" == strcommand){   return LLL_RJMP;    }
-    if("sub" == strcommand){    return LLL_SUB;     }
-    if("exit" == strcommand){   return LLL_EXIT;    }
-    if(".def" == strcommand){   return LLLC_DEF;    }
-    if(':' == strcommand[0]){   return LLLC_LABEL;  }
+    if("add"    == strcommand.substr(0,3)){     return LLL_ADD;     }
+    if("and"    == strcommand.substr(0,3)){     return LLL_AND;     }
+    if("cmp"    == strcommand.substr(0,3)){     return LLL_CMP;     }
+    if("dec"    == strcommand.substr(0,3)){     return LLL_DEC;     }
+    if("div"    == strcommand.substr(0,3)){     return LLL_DIV;     }
+    if("frjmp"  == strcommand.substr(0,5)){     return LLL_FRJMP;   }
+    if("in"     == strcommand.substr(0,2)){     return LLL_IN;      }
+    if("inc"    == strcommand.substr(0,3)){     return LLL_INC;     }
+    if("jmp"    == strcommand.substr(0,3)){     return LLL_JMP;     }
+    if("mov"    == strcommand.substr(0,3)){     return LLL_MOV;     }
+    if("mul"    == strcommand.substr(0,3)){     return LLL_MUL;     }
+    if("not"    == strcommand.substr(0,3)){     return LLL_NOT;     }
+    if("or"     == strcommand.substr(0,2)){     return LLL_OR;      }
+    if("out"    == strcommand.substr(0,3)){     return LLL_OUT;     }
+    if("ret"    == strcommand.substr(0,3)){     return LLL_RET;     }
+    if("rjmp"   == strcommand.substr(0,4)){     return LLL_RJMP;    }
+    if("sub"    == strcommand.substr(0,3)){     return LLL_SUB;     }
+    if("exit"   == strcommand.substr(0,4)){     return LLL_EXIT;    }
+    if(".def"   == strcommand.substr(0,4)){     return LLLC_DEF;    }
+    if(':'      == strcommand[0]){  return LLLC_LABEL;  }
 
     std::cout<<"ERROR: wrong command: "<<strcommand<<" in line:"<<line_number<<std::endl;
     exit(0);
@@ -122,5 +121,5 @@ returns string to write to output file
 std::string executeCommand(unsigned int command,std::string strcommand,std::string param1, std::string param2, std::string param3, unsigned long long int line_number){
     std::cout<<line_number<<": "<<strcommand<<":"<<param1<<":"<<param2<<":"<<param3<<std::endl;
 
-    return lllc_command_map[command](strcommand.substr(3),param1,param2,param3,line_number);
+    return lllc_command_map[command](strcommand,param1,param2,param3,line_number);
 }

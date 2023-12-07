@@ -13,27 +13,31 @@ std::string lllcSuffix(std::string options, unsigned long long line_number){
     std::string tmpString;
     char tmpChar;
     unsigned char len = options.length()-1;
-    unsigned char i=0;
+    if(options.length()){
+        unsigned char i=0;
 
-    if('s' == options[0]){
-        tmpString.push_back((char)(1<<6));
-        i++;
-    }
-    if(len >=1){
-        if('s' == options[len]){
-            tmpString.push_back((char)(1<<7));
-            tmpString[0] |= (1<<7);
-        }else if('c' == options[len]){
-            tmpString.push_back((char)0);
-            tmpString[0] |= (1<<7);
-        }else{
-            std::cout<<"ERROR: unrecognized option: "<<options[len]<<" in line: "<<line_number<<std::endl;
-            exit(0);
+        if('s' == options[0]){
+            tmpString.push_back((char)(1<<6));
+            i++;
         }
-    }
+        if(len >=1){
+            if('s' == options[len]){
+                tmpString.push_back((char)(1<<7));
+                tmpString[0] |= (1<<7);
+            }else if('c' == options[len]){
+                tmpString.push_back((char)0);
+                tmpString[0] |= (1<<7);
+            }else{
+                std::cout<<"ERROR: unrecognized option: "<<options[len]<<" in line: "<<line_number<<std::endl;
+                exit(0);
+            }
+        }
 
-    for(;i<len;i++){
-        tmpString[1] |= (1<<checkFlag(options[i],line_number));
+        for(;i<len;i++){
+            tmpString[1] |= (1<<checkFlag(options[i],line_number));
+        }
+    }else{
+        tmpString.push_back(0);
     }
     return tmpString;
 }
@@ -53,6 +57,15 @@ static std::string executeSubparameter(std::string parameter, unsigned long int 
     }
 
     switch(parameter[0]){
+        case ':':
+            if(type & label){
+                tmpString=parameter;
+                tmpString.push_back(' ');
+                return tmpString;
+            }else{
+                std::cout<<"ERROR: label not allowed in this parameter: "<<parameter<<" in line: "<<line_number<<std::endl;
+                exit(0);
+            }
         case '%':
             if(type & flag){
                 tmpString.push_back(parameter[0]);
