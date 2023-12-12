@@ -7,6 +7,7 @@ command_processing.cpp  command_processing.hpp
 directives.cpp          directives.hpp
 execute.cpp             execute.hpp
 flags.cpp               flags.hpp
+end.cpp                 end.hpp
 )
 
 add_library(${PROJECT_NAME} ${Execute_Sources})

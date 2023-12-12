@@ -1,17 +1,7 @@
 #include "commands.hpp"
 #include "execute.hpp"
-#include <vector>
 
 unsigned long long int actual_offset=0;
-
-typedef struct{
-    std::string name;
-    unsigned long long int counter= 0;
-    bool minus = true;
-    bool fromDirective;
-    bool active = true;
-    unsigned long long int offset = 0;
-} label_s;
 
 std::vector <label_s> labels;
 

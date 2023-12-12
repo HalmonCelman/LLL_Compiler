@@ -2,6 +2,19 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+
+//labels
+typedef struct{
+    std::string name;
+    unsigned long long int counter= 0;
+    bool minus = true;
+    bool fromDirective;
+    bool active = true;
+    unsigned long long int offset = 0;
+} label_s;
+
+extern std::vector <label_s> labels;
 
 typedef enum{
     LLL_ADD = 0,

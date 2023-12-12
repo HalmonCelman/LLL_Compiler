@@ -1,4 +1,3 @@
 - directive implementation: .def
-- jump calculated to write
 - optimalization
 - jumping over comments (with !)
