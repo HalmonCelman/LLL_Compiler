@@ -20,6 +20,11 @@ struct by_offset
 static std::string oneChar(char actualChar, unsigned long long int offset){
     std::string tmpString;
     
+    if(!labels.size()){
+        tmpString.push_back(actualChar);
+        return tmpString;
+    }
+
     if(labels[0].offset == offset){
         switch(actualChar){
             case LLL_FRJMP:
@@ -95,7 +100,11 @@ std::string endOfCompiling(std::string path){
     std::sort(labels.begin(),labels.end(),by_offset());
 
     std::ifstream in;
-    in.open(path,std::ios::in);
+    in.open(path,std::ios::in | std::ios::binary);
+    if(!in.is_open()){
+        std::cout<<"ERROR: cannot open temporary output file"<<std::endl;
+        exit(0);
+    }
     char actualChar;
 
     for(unsigned long long int i=0; in.get(actualChar); i++){
