@@ -25,6 +25,8 @@ const unsigned char number_of_tokens[]={
     3,      // NOT
     3,      // OR
     3,      // OUT
+    2,      // POP
+    2,      // PUSH
     1,      // RET
     3,      // RJMP
     4       // SUB
@@ -49,14 +51,16 @@ const lllc_exec lllc_command_map[]={
     lllc_not,
     lllc_or,
     lllc_out,
+    lllc_pop,
+    lllc_push,
     lllc_ret,
     lllc_rjmp,
     lllc_sub,
-    0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,
     lllc_exit,
     lllc_def,
     lllc_label
@@ -84,6 +88,8 @@ unsigned int compareCommands(std::string strcommand,unsigned long long int line_
     if("not"    == strcommand.substr(0,3)){     return LLL_NOT;     }
     if("or"     == strcommand.substr(0,2)){     return LLL_OR;      }
     if("out"    == strcommand.substr(0,3)){     return LLL_OUT;     }
+    if("pop"    == strcommand.substr(0,3)){     return LLL_POP;     }
+    if("push"   == strcommand.substr(0,4)){     return LLL_PUSH;     }
     if("ret"    == strcommand.substr(0,3)){     return LLL_RET;     }
     if("rjmp"   == strcommand.substr(0,4)){     return LLL_RJMP;    }
     if("sub"    == strcommand.substr(0,3)){     return LLL_SUB;     }

@@ -31,6 +31,8 @@ typedef enum{
     LLL_NOT,
     LLL_OR,
     LLL_OUT,
+    LLL_POP,
+    LLL_PUSH,
     LLL_RET,
     LLL_RJMP,
     LLL_SUB,
@@ -55,6 +57,8 @@ std::string lllc_mul   (std::string options, std::string param1,std::string para
 std::string lllc_not   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_or    (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_out   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
+std::string lllc_pop   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
+std::string lllc_push  (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_ret   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_rjmp  (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 std::string lllc_sub   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);

@@ -312,6 +312,35 @@ std::string lllc_out(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
+std::string lllc_pop(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+{
+    std::string tmpString;
+
+    tmpString = lllcSuffix(strcommand.substr(3), line_number);
+    tmpString[0] |= (char)LLL_POP;
+
+    tmpString += executeParameter(param1, reg | mem | flag | indir | range, line_number);
+
+    increaseJumpLength(tmpString.length());
+
+    return tmpString;
+}
+
+std::string lllc_push(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+{
+    std::string tmpString;
+
+    tmpString = lllcSuffix(strcommand.substr(4), line_number);
+    tmpString[0] |= (char)LLL_PUSH;
+
+    tmpString += executeParameter(param1, reg | mem | flag | indir | cst | range, line_number);
+
+    increaseJumpLength(tmpString.length());
+
+    return tmpString;
+}
+
+
 std::string lllc_ret(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
     std::string tmpString;
