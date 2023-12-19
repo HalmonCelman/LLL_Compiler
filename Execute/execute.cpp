@@ -105,6 +105,7 @@ static std::string executeSubparameter(std::string parameter, unsigned long int 
                 tmpType=2;
                 tmpOffset=1;
                 maxValue=0xFFFFFFFF;
+                break;
             }else{
                 std::cout<<"ERROR: memory address not allowed in this parameter: "<<parameter<<" in line: "<<line_number<<std::endl;
                 exit(0);
