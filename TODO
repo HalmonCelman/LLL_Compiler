@@ -1,3 +1,4 @@
 - directive implementation: .def
 - optimalization
 - jumping over comments (with !)
+- direct writing address to jump in jumps

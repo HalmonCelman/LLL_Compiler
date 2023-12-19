@@ -8,6 +8,7 @@ int toSkip=0;
 int bytesToWrite=0;
 unsigned long long int increaseJumpLength;
 unsigned long long int valueToWrite=0;
+bool minus;
 
 struct by_offset
 {
@@ -19,26 +20,22 @@ struct by_offset
 
 static std::string oneChar(char actualChar, unsigned long long int offset){
     std::string tmpString;
-    
-    if(!labels.size()){
-        tmpString.push_back(actualChar);
-        return tmpString;
-    }
 
-    if(labels[0].offset == offset){
+    if(labels.size() && labels[0].offset == offset){
+        
         switch(actualChar){
             case LLL_FRJMP:
-                toSkip=1;
+                toSkip=0;
                 bytesToWrite=1;
-                valueToWrite=(labels[0].minus ? -labels[0].counter:labels[0].counter);
+                valueToWrite=labels[0].counter;
                 break;
             case LLL_RJMP:
-                toSkip=4;
+                toSkip=3;
                 bytesToWrite=4;
-                valueToWrite=(labels[0].minus ? -labels[0].counter:labels[0].counter);
+                valueToWrite=labels[0].counter;
                 break;
             case LLL_JMP:
-                toSkip=8;
+                toSkip=7;
                 bytesToWrite=8;
                 valueToWrite=(labels[0].minus ? offset - labels[0].counter: offset+labels[0].counter);
                 break;
@@ -46,6 +43,7 @@ static std::string oneChar(char actualChar, unsigned long long int offset){
                 std::cout<<"ERROR: wrong offset"<<std::endl;
                 exit(0);
         }
+        minus = labels[0].minus;
         tmpString.push_back(actualChar);
         
         labels.erase(labels.begin());
@@ -53,13 +51,14 @@ static std::string oneChar(char actualChar, unsigned long long int offset){
         return tmpString;
     }else{
         if(bytesToWrite == 1){
-            tmpString.push_back(valueToWrite);
+            tmpString.push_back((char)(minus ? -valueToWrite:valueToWrite));
             bytesToWrite=0;
         }else if(bytesToWrite == 4){
-            tmpString.push_back((valueToWrite>>24) & 0xFF);
-            tmpString.push_back((valueToWrite>>16) & 0xFF);
-            tmpString.push_back((valueToWrite>>8) & 0xFF);
-            tmpString.push_back((valueToWrite) & 0xFF);
+            long int actValue = (minus ? -valueToWrite:valueToWrite);
+            tmpString.push_back((actValue>>24) & 0xFF);
+            tmpString.push_back((actValue>>16) & 0xFF);
+            tmpString.push_back((actValue>>8) & 0xFF);
+            tmpString.push_back((actValue) & 0xFF);
             bytesToWrite=0;
         }else if(bytesToWrite == 8){
             tmpString.push_back((valueToWrite>>56) & 0xFF);

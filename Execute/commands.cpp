@@ -35,7 +35,6 @@ static void processLabel(std::string name, bool fromDirective, unsigned long lon
 
     if(ait.size()){
     for(int i=0;i<ait.size();i++){
-        std::cout<<(int)i<<std::endl;
         if( labels[ait[i]].fromDirective == true){
             if(fromDirective){
                 std::cout<<"ERROR: duplicate of label: "<<name<<" in line: "<<line_number<<std::endl;
@@ -173,9 +172,8 @@ std::string lllc_frjmp(std::string strcommand, std::string param1, std::string p
 
     tmpString.push_back(0);
     tmpString += executeParameter(param2, bv, line_number);
-
+    
     processLabel(param1,false,line_number);
-    printLabelStatus();
     increaseJumpLength(tmpString.length());
 
     return tmpString;
@@ -229,7 +227,6 @@ std::string lllc_jmp(std::string strcommand, std::string param1, std::string par
     tmpString += executeParameter(param2, bv, line_number);
 
     processLabel(param1,false,line_number);
-    printLabelStatus();
     increaseJumpLength(tmpString.length());
 
     return tmpString;
@@ -368,8 +365,6 @@ std::string lllc_rjmp(std::string strcommand, std::string param1, std::string pa
     tmpString += executeParameter(param2, bv, line_number);
 
     processLabel(param1,false,line_number);
-    printLabelStatus();
-
     increaseJumpLength(tmpString.length());
 
     return tmpString;
@@ -412,6 +407,5 @@ std::string lllc_def(std::string strcommand, std::string param1, std::string par
 std::string lllc_label(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
     processLabel(strcommand,true,line_number);
-    printLabelStatus();
     return "";
 }
