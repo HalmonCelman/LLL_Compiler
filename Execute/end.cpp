@@ -19,24 +19,27 @@ struct by_offset
 };
 
 static const std::string& oneChar(char actualChar, unsigned long long int offset){
+    static unsigned char delay=0;
     static std::string tmpString;
     tmpString="";
 
     if(labels.size() && labels[0].offset == offset){
         
+        if(actualChar & 0x80) delay=1;
+
         switch(actualChar & 0x3F){
             case LLL_FRJMP:
-                toSkip=0;
+                toSkip=delay;
                 bytesToWrite=1;
                 valueToWrite=labels[0].counter;
                 break;
             case LLL_RJMP:
-                toSkip=3;
+                toSkip=3+delay;
                 bytesToWrite=4;
                 valueToWrite=labels[0].counter;
                 break;
             case LLL_JMP:
-                toSkip=7;
+                toSkip=7+delay;
                 bytesToWrite=8;
                 valueToWrite=(labels[0].minus ? offset - labels[0].counter: offset+labels[0].counter);
                 break;
@@ -51,7 +54,10 @@ static const std::string& oneChar(char actualChar, unsigned long long int offset
         
         return tmpString;
     }else{
-        if(bytesToWrite == 1){
+        if(delay){
+            delay=0;
+            tmpString.push_back(actualChar);
+        }if(bytesToWrite == 1){
             tmpString.push_back((char)(minus ? -valueToWrite:valueToWrite));
             bytesToWrite=0;
         }else if(bytesToWrite == 4){
