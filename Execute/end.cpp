@@ -23,7 +23,7 @@ static std::string oneChar(char actualChar, unsigned long long int offset){
 
     if(labels.size() && labels[0].offset == offset){
         
-        switch(actualChar){
+        switch(actualChar & 0x3F){
             case LLL_FRJMP:
                 toSkip=0;
                 bytesToWrite=1;
