@@ -9,15 +9,18 @@ if s option is set -> 7th bit is set
 if there is some condition -> 8th bit is set and function returns true
 -> also condition flags are set in byte 2
 */
-std::string lllcSuffix(std::string options, unsigned long long line_number){
-    std::string tmpString;
-    char tmpChar;
+const std::string& lllcSuffix(std::string options, unsigned long long line_number){
+    static std::string tmpString;
+    tmpString="";
+
     unsigned char len = options.length()-1;
     if(options.length()){
         unsigned char i=0;
 
+        tmpString.push_back(0);
+
         if('s' == options[0]){
-            tmpString.push_back((char)(1<<6));
+            tmpString[0] |= (1<<6);
             i++;
         }
         if(len >=1){
@@ -42,14 +45,15 @@ std::string lllcSuffix(std::string options, unsigned long long line_number){
     return tmpString;
 }
 
-static std::string executeSubparameter(std::string parameter, unsigned long int type, unsigned long long int line_number){
+static const std::string& executeSubparameter(std::string parameter, unsigned long int type, unsigned long long int line_number){
     unsigned char len = parameter.length();
     unsigned char tmpOffset=0;
     unsigned char tmpType=0;
     bool isflag=false;
     unsigned long long maxValue=0;
     unsigned long long actualValue=0;
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     if("sreg" == parameter){
         tmpString.push_back('$');
@@ -189,8 +193,10 @@ static std::string executeSubparameter(std::string parameter, unsigned long int 
 }
 
 
-std::string executeParameter(std::string parameter, unsigned long int type, unsigned long long int line_number){
-    std::string tmpString;
+const std::string& executeParameter(std::string parameter, unsigned long int type, unsigned long long int line_number){
+    static std::string tmpString;
+    tmpString="";
+
     unsigned char minusp=0;
     for(int i=0;i<parameter.length();i++){
         if('-' == parameter[i]){

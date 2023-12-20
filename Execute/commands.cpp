@@ -86,12 +86,13 @@ static void printLabelStatus(void){
 }
 
 
-std::string lllc_add(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_add(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_ADD;
+
 
     tmpString += executeParameter(param1, reg | mem | flag | indir | range, line_number);
     tmpString += executeParameter(param2, reg | mem | flag | indir | cst | range, line_number);
@@ -102,9 +103,9 @@ std::string lllc_add(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_and(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_and(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_AND;
@@ -118,9 +119,10 @@ std::string lllc_and(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_cmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_cmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_CMP;
@@ -133,9 +135,10 @@ std::string lllc_cmp(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_dec(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_dec(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_DEC;
@@ -147,9 +150,10 @@ std::string lllc_dec(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_div(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_div(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_DIV;
@@ -163,9 +167,10 @@ std::string lllc_div(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_frjmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_frjmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(5), line_number);
     tmpString[0] |= (char)LLL_FRJMP;
@@ -179,9 +184,10 @@ std::string lllc_frjmp(std::string strcommand, std::string param1, std::string p
     return tmpString;
 }
 
-std::string lllc_in(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_in(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(2), line_number);
     tmpString[0] |= (char)LLL_IN;
@@ -194,9 +200,10 @@ std::string lllc_in(std::string strcommand, std::string param1, std::string para
     return tmpString;
 }
 
-std::string lllc_inc(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_inc(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_INC;
@@ -208,9 +215,10 @@ std::string lllc_inc(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_jmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_jmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_JMP;
@@ -232,9 +240,10 @@ std::string lllc_jmp(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_mov(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_mov(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_MOV;
@@ -247,9 +256,10 @@ std::string lllc_mov(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_mul(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_mul(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_MUL;
@@ -263,9 +273,10 @@ std::string lllc_mul(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_not(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_not(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_NOT;
@@ -278,9 +289,10 @@ std::string lllc_not(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_or(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_or(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(2), line_number);
     tmpString[0] |= (char)LLL_OR;
@@ -294,9 +306,10 @@ std::string lllc_or(std::string strcommand, std::string param1, std::string para
     return tmpString;
 }
 
-std::string lllc_out(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_out(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_OUT;
@@ -309,9 +322,10 @@ std::string lllc_out(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_pop(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_pop(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_POP;
@@ -323,9 +337,10 @@ std::string lllc_pop(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_push(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_push(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(4), line_number);
     tmpString[0] |= (char)LLL_PUSH;
@@ -338,9 +353,10 @@ std::string lllc_push(std::string strcommand, std::string param1, std::string pa
 }
 
 
-std::string lllc_ret(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_ret(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_RET;
@@ -350,9 +366,10 @@ std::string lllc_ret(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_rjmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_rjmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(4), line_number);
     tmpString[0] |= (char)LLL_RJMP;
@@ -370,9 +387,10 @@ std::string lllc_rjmp(std::string strcommand, std::string param1, std::string pa
     return tmpString;
 }
 
-std::string lllc_sub(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_sub(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_SUB;
@@ -386,9 +404,10 @@ std::string lllc_sub(std::string strcommand, std::string param1, std::string par
     return tmpString;
 }
 
-std::string lllc_exit(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_exit(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
 
     tmpString = lllcSuffix(strcommand.substr(4), line_number);
     tmpString[0] |= (char)LLL_EXIT;
@@ -398,14 +417,20 @@ std::string lllc_exit(std::string strcommand, std::string param1, std::string pa
     return tmpString;
 }
 
-std::string lllc_def(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_def(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
+    static std::string tmpString;
+    tmpString="";
+
     std::cout << "def directive" << std::endl;
-    return "";
+    return tmpString;
 }
 
-std::string lllc_label(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
+const std::string& lllc_label(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
+    static std::string tmpString;
+    tmpString="";
+
     processLabel(strcommand,true,line_number);
-    return "";
+    return tmpString;
 }

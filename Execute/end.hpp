@@ -3,4 +3,4 @@
 #include <iostream>
 #include <string>
 
-std::string endOfCompiling(std::string path);
+const std::string& endOfCompiling(std::string path);

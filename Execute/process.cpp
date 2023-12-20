@@ -35,8 +35,9 @@ static bool isDelimiter(char actual_character){
 /*
 this function execute command and do cleanup after succesfully finished execution
 */
-static std::string processCommand(unsigned long long int line_number){
-    std::string returnString = executeCommand(actual_command,tokens[0],tokens[1],tokens[2],tokens[3],line_number);
+static const std::string& processCommand(unsigned long long int line_number){
+    static std::string returnString;
+    returnString = executeCommand(actual_command,tokens[0],tokens[1],tokens[2],tokens[3],line_number);
     //cleanup
     tokens[0].clear();
     tokens[1].clear();
@@ -54,9 +55,10 @@ this function process one character at once, based on state machine architecture
 - identify tokens/directives
 - executes tokens/directives
 */
-static std::string process(char actual_character, unsigned long long int line_number,bool end_of_line){
+static const std::string& process(char actual_character, unsigned long long int line_number,bool end_of_line){
     
-    std::string tmpString;
+    static std::string tmpString;
+    tmpString="";
     
     switch(status){
         case TOKEN:
@@ -82,7 +84,7 @@ static std::string process(char actual_character, unsigned long long int line_nu
                     tokens[actual_token].push_back(actual_character);
                 }
             }
-            return "";
+            return tmpString;
 
         case DELIMITER:
             if(!isDelimiter(actual_character)){
@@ -94,7 +96,7 @@ static std::string process(char actual_character, unsigned long long int line_nu
                     status = TOKEN;
                 }
             }
-            return "";
+            return tmpString;
 
         case DIRECTIVE:
             if(endOfDirective(actual_directive,actual_character,end_of_line)){
@@ -115,8 +117,10 @@ static std::string process(char actual_character, unsigned long long int line_nu
 /*
 this function process all tokens at single line
 */
-std::string processTokensInLine(std::string line, unsigned long long int line_number){
-    std::string tmpString;
+const std::string& processTokensInLine(std::string line, unsigned long long int line_number){
+    static std::string tmpString;
+    tmpString="";
+
     for(int i=0;line[i];i++){
         #if DEBUG_MODE
             std::cout<<"processing: '"<<line[i]<<"' \n";
@@ -132,8 +136,10 @@ std::string processTokensInLine(std::string line, unsigned long long int line_nu
 /*
 this function cleanup at the end - checks if any tokens left and process
 */
-std::string endOfProcessing(unsigned long long int line_number){
-    std::string tmpString = process(' ', line_number, true);
+const std::string& endOfProcessing(unsigned long long int line_number){
+    static std::string tmpString;
+    tmpString = process(' ', line_number, true);
+    
     if(actual_token || tokens[0].length()){
         std::cout<<"ERROR: Unexpected End Of File: "<<tokens[0]<<" "<<tokens[1]<<" "<<tokens[2]<<tokens[3]<<std::endl;
     }

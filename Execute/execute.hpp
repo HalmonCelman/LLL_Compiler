@@ -18,5 +18,5 @@ typedef enum{
 } parameterType;
 
 
-std::string lllcSuffix(std::string options, unsigned long long line_number);
-std::string executeParameter(std::string parameter, unsigned long int type, unsigned long long int line_number);
+const std::string& lllcSuffix(std::string options, unsigned long long line_number);
+const std::string& executeParameter(std::string parameter, unsigned long int type, unsigned long long int line_number);

@@ -2,7 +2,7 @@
 #include "commands.hpp"
 
 
-typedef std::string (*lllc_exec)(std::string,std::string,std::string,std::string,unsigned long long int);
+typedef const std::string& (*lllc_exec)(std::string,std::string,std::string,std::string,unsigned long long int);
 
 
 /// **************************** section of commands & directives ***********************************
@@ -124,7 +124,7 @@ this function executes command matching to lllc_command_map
 at this moment also shows all parameters of function
 returns string to write to output file
 */
-std::string executeCommand(unsigned int command,std::string strcommand,std::string param1, std::string param2, std::string param3, unsigned long long int line_number){
+const std::string& executeCommand(unsigned int command,std::string strcommand,std::string param1, std::string param2, std::string param3, unsigned long long int line_number){
     std::cout<<line_number<<": "<<strcommand<<":"<<param1<<":"<<param2<<":"<<param3<<std::endl;
 
     return lllc_command_map[command](strcommand,param1,param2,param3,line_number);

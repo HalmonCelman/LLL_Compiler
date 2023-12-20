@@ -18,8 +18,9 @@ struct by_offset
     }
 };
 
-static std::string oneChar(char actualChar, unsigned long long int offset){
-    std::string tmpString;
+static const std::string& oneChar(char actualChar, unsigned long long int offset){
+    static std::string tmpString;
+    tmpString="";
 
     if(labels.size() && labels[0].offset == offset){
         
@@ -82,8 +83,8 @@ static std::string oneChar(char actualChar, unsigned long long int offset){
 }
 
 
-std::string endOfCompiling(std::string path){ 
-    std::string resultString;
+const std::string& endOfCompiling(std::string path){ 
+    static std::string resultString;
 
     for(int i=0;i<labels.size();i++){
         if(labels[i].active){

@@ -23,6 +23,8 @@ if there is no ! after beginning of the comment nothing is done,
 */
 std::string processDirective(char actual_character, bool end_of_line, bool first_execution){
     std::string tmpString;
+    tmpString="";
+
     if(!first_execution){
         if(exclamation){
             if(end_of_line) tmpString.push_back('\n');

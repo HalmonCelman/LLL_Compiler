@@ -1,4 +1,9 @@
 # build folder
 [Bb][Uu][Ii][Ll][Dd]
 
+lll_tmp
+
+*.lll
+*.l
+
 .vscode
