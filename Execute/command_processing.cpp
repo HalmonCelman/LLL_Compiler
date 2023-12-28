@@ -74,28 +74,28 @@ returns error if there is no such command
 */
 unsigned int compareCommands(std::string strcommand,unsigned long long int line_number){
 
-    if("add"    == strcommand.substr(0,3)){     return LLL_ADD;     }
-    if("and"    == strcommand.substr(0,3)){     return LLL_AND;     }
-    if("cmp"    == strcommand.substr(0,3)){     return LLL_CMP;     }
-    if("dec"    == strcommand.substr(0,3)){     return LLL_DEC;     }
-    if("div"    == strcommand.substr(0,3)){     return LLL_DIV;     }
-    if("frjmp"  == strcommand.substr(0,5)){     return LLL_FRJMP;   }
-    if("in"     == strcommand.substr(0,2)){     return LLL_IN;      }
-    if("inc"    == strcommand.substr(0,3)){     return LLL_INC;     }
-    if("jmp"    == strcommand.substr(0,3)){     return LLL_JMP;     }
-    if("mov"    == strcommand.substr(0,3)){     return LLL_MOV;     }
-    if("mul"    == strcommand.substr(0,3)){     return LLL_MUL;     }
-    if("not"    == strcommand.substr(0,3)){     return LLL_NOT;     }
-    if("or"     == strcommand.substr(0,2)){     return LLL_OR;      }
-    if("out"    == strcommand.substr(0,3)){     return LLL_OUT;     }
-    if("pop"    == strcommand.substr(0,3)){     return LLL_POP;     }
-    if("push"   == strcommand.substr(0,4)){     return LLL_PUSH;     }
-    if("ret"    == strcommand.substr(0,3)){     return LLL_RET;     }
-    if("rjmp"   == strcommand.substr(0,4)){     return LLL_RJMP;    }
-    if("sub"    == strcommand.substr(0,3)){     return LLL_SUB;     }
-    if("exit"   == strcommand.substr(0,4)){     return LLL_EXIT;    }
-    if(".def"   == strcommand.substr(0,4)){     return LLLC_DEF;    }
-    if(':'      == strcommand[0]){  return LLLC_LABEL;  }
+    if("add"    == strcommand.substr(0,3)){     return LLL_ADD;     } else
+    if("and"    == strcommand.substr(0,3)){     return LLL_AND;     } else
+    if("cmp"    == strcommand.substr(0,3)){     return LLL_CMP;     } else
+    if("dec"    == strcommand.substr(0,3)){     return LLL_DEC;     } else
+    if("div"    == strcommand.substr(0,3)){     return LLL_DIV;     } else
+    if("frjmp"  == strcommand.substr(0,5)){     return LLL_FRJMP;   } else
+    if("inc"    == strcommand.substr(0,3)){     return LLL_INC;     } else
+    if("in"     == strcommand.substr(0,2)){     return LLL_IN;      } else
+    if("jmp"    == strcommand.substr(0,3)){     return LLL_JMP;     } else
+    if("mov"    == strcommand.substr(0,3)){     return LLL_MOV;     } else
+    if("mul"    == strcommand.substr(0,3)){     return LLL_MUL;     } else
+    if("not"    == strcommand.substr(0,3)){     return LLL_NOT;     } else
+    if("or"     == strcommand.substr(0,2)){     return LLL_OR;      } else
+    if("out"    == strcommand.substr(0,3)){     return LLL_OUT;     } else
+    if("pop"    == strcommand.substr(0,3)){     return LLL_POP;     } else
+    if("push"   == strcommand.substr(0,4)){     return LLL_PUSH;    } else
+    if("ret"    == strcommand.substr(0,3)){     return LLL_RET;     } else
+    if("rjmp"   == strcommand.substr(0,4)){     return LLL_RJMP;    } else
+    if("sub"    == strcommand.substr(0,3)){     return LLL_SUB;     } else
+    if("exit"   == strcommand.substr(0,4)){     return LLL_EXIT;    } else
+    if(".def"   == strcommand.substr(0,4)){     return LLLC_DEF;    } else
+    if(':'      == strcommand[0])         {     return LLLC_LABEL;  }
 
     std::cout<<"ERROR: wrong command: "<<strcommand<<" in line:"<<line_number<<std::endl;
     exit(0);
