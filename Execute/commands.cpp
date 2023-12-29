@@ -297,7 +297,7 @@ const std::string& lllc_out(std::string strcommand, std::string param1, std::str
     tmpString = lllcSuffix(strcommand.substr(3), line_number);
     tmpString[0] |= (char)LLL_OUT;
 
-    tmpString += executeParameter(param1, reg | mem | flag | indir | range, line_number);
+    tmpString += executeParameter(param1, reg | mem | flag | indir | cst | range, line_number);
     tmpString += executeParameter(param2, v8, line_number);
 
     increaseJumpLength(tmpString.length());
