@@ -15,7 +15,6 @@ const unsigned char number_of_tokens[]={
     4,      // AND
     3,      // CMP
     2,      // DEC
-    4,      // DIV
     3,      // FRJMP
     3,      // IN
     2,      // INC
@@ -23,7 +22,7 @@ const unsigned char number_of_tokens[]={
     3,      // MOV
     4,      // MUL
     3,      // NOT
-    3,      // OR
+    4,      // OR
     3,      // OUT
     2,      // POP
     2,      // PUSH
@@ -41,7 +40,6 @@ const lllc_exec lllc_command_map[]={
     lllc_and,
     lllc_cmp,
     lllc_dec,
-    lllc_div,
     lllc_frjmp,
     lllc_in,
     lllc_inc,
@@ -78,7 +76,6 @@ unsigned int compareCommands(std::string strcommand,unsigned long long int line_
     if("and"    == strcommand.substr(0,3)){     return LLL_AND;     } else
     if("cmp"    == strcommand.substr(0,3)){     return LLL_CMP;     } else
     if("dec"    == strcommand.substr(0,3)){     return LLL_DEC;     } else
-    if("div"    == strcommand.substr(0,3)){     return LLL_DIV;     } else
     if("frjmp"  == strcommand.substr(0,5)){     return LLL_FRJMP;   } else
     if("inc"    == strcommand.substr(0,3)){     return LLL_INC;     } else
     if("in"     == strcommand.substr(0,2)){     return LLL_IN;      } else

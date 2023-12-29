@@ -21,7 +21,6 @@ typedef enum{
     LLL_AND,
     LLL_CMP,
     LLL_DEC,
-    LLL_DIV,
     LLL_FRJMP,
     LLL_IN,
     LLL_INC,
@@ -47,7 +46,6 @@ const std::string& lllc_add   (std::string options, std::string param1,std::stri
 const std::string& lllc_and   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_cmp   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_dec   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
-const std::string& lllc_div   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_frjmp (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_in    (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_inc   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);

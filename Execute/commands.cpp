@@ -150,23 +150,6 @@ const std::string& lllc_dec(std::string strcommand, std::string param1, std::str
     return tmpString;
 }
 
-const std::string& lllc_div(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
-{
-    static std::string tmpString;
-    tmpString="";
-
-    tmpString = lllcSuffix(strcommand.substr(3), line_number);
-    tmpString[0] |= (char)LLL_DIV;
-
-    tmpString += executeParameter(param1, reg | mem | flag | indir | range, line_number);
-    tmpString += executeParameter(param2, reg | mem | flag | indir | cst | range, line_number);
-    tmpString += executeParameter(param3, reg | mem | flag | indir | cst | range, line_number);
-
-    increaseJumpLength(tmpString.length());
-
-    return tmpString;
-}
-
 const std::string& lllc_frjmp(std::string strcommand, std::string param1, std::string param2, std::string param3, unsigned long long int line_number)
 {
     static std::string tmpString;
