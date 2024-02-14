@@ -58,7 +58,7 @@ const lllc_exec lllc_command_map[]={
     0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,
+    0,0,0,0,0,
     lllc_exit,
     lllc_def,
     lllc_label
