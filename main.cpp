@@ -85,6 +85,8 @@ int main(int args, char **argv){
         out_file.close();
         // deleting temporary files
         std::filesystem::remove_all(TMP_DIR.c_str());
+
+        std::cout<<"Compiled succesfully! \n";
     } else{
         if(!strcmp(argv[1],"--help")){
             help();

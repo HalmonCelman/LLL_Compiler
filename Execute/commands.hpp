@@ -64,3 +64,5 @@ const std::string& lllc_exit  (std::string options, std::string param1,std::stri
 // directives
 const std::string& lllc_def   (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
 const std::string& lllc_label (std::string options, std::string param1,std::string param2,std::string param3,unsigned long long int line_number);
+void printLabelStatus(void);
+

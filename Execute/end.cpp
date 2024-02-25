@@ -10,6 +10,9 @@ unsigned long long int increaseJumpLength;
 unsigned long long int valueToWrite=0;
 bool minus;
 
+/*
+constructor for sorting by offset
+*/
 struct by_offset
 {
     inline bool operator() (const label_s& struct1, const label_s& struct2)
@@ -18,13 +21,18 @@ struct by_offset
     }
 };
 
+/*
+    writes actual char into output file:
+    - if label, writes its counter
+    - if not, gives unchanged char
+*/
 static const std::string& oneChar(char actualChar, unsigned long long int offset){
     static unsigned char delay=0;
     static std::string tmpString;
     tmpString="";
 
     if(labels.size() && labels[0].offset == offset){
-        
+        std::cout<<"\n";
         if(actualChar & 0x80) delay=1;
 
         switch(actualChar & 0x3F){
@@ -88,11 +96,15 @@ static const std::string& oneChar(char actualChar, unsigned long long int offset
     }
 }
 
-
+/*
+1. Deletes all active labels, checks if some jumps are redundant
+2. sorts labels
+3. writes all labels with their counters, leaves everything unchanged
+*/
 const std::string& endOfCompiling(std::string path){ 
     static std::string resultString;
-
-    for(int i=0;i<labels.size();i++){
+    int i=0;
+    while(i<labels.size()){
         if(labels[i].active){
             if(labels[i].fromDirective){
                 labels.erase(labels.begin()+i);
@@ -100,6 +112,8 @@ const std::string& endOfCompiling(std::string path){
                 std::cout<<"ERROR: label "<<labels[i].name<<" not found"<<std::endl;
                 exit(0);
             }
+        }else{
+            i++;
         }
     }
 

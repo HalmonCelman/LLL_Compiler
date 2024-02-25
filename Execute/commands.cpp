@@ -75,7 +75,7 @@ static void processLabel(std::string name, bool fromDirective, unsigned long lon
 }
 
 
-static void printLabelStatus(void){
+void printLabelStatus(void){
     std::vector <label_s>::iterator it=labels.begin();
 
     while(it != labels.end()){
